@@ -1,0 +1,10 @@
+stages:
+  - deploy
+
+docker-deploy:
+  stage: deploy
+  script:
+    - ./build-push
+  tags:
+    - gopay
+    - packager
