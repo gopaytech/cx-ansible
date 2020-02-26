@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+## Docker deploy
+
+set -ex
+
+IMAGE=$CI_PROJECT_NAME
+VERSION=1.0.0
+
+eval "docker build -t artifactory-gojek.golabs.io:6555/$IMAGE:$VERSION -t artifactory-gojek.golabs.io:6555/$IMAGE:latest -f Dockerfile ."
+eval "docker push artifactory-gojek.golabs.io:6555/$IMAGE:$VERSION"
+eval "docker push artifactory-gojek.golabs.io:6555/$IMAGE:latest"
+
+eval "docker tag artifactory-gojek.golabs.io:6555/$IMAGE:$VERSION asia.gcr.io/systems-0001/$IMAGE:$VERSION"
+eval "gcloud docker -- push asia.gcr.io/systems-0001/$IMAGE:$VERSION"
+
+eval "docker tag artifactory-gojek.golabs.io:6555/$IMAGE:latest asia.gcr.io/systems-0001/$IMAGE:latest"
+eval "gcloud docker -- push asia.gcr.io/systems-0001/$IMAGE:latest"
