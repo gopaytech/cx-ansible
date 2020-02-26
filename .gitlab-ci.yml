@@ -4,6 +4,7 @@ stages:
 docker-deploy:
   stage: deploy
   script:
+    - chmod +x ./build-push
     - ./build-push
   tags:
     - gopay
